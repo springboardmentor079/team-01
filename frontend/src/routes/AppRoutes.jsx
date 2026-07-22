@@ -3,6 +3,8 @@ import AuthLayout from "../layouts/AuthLayout";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 import ProtectedRoute from "./ProtectedRoute";
+import DashboardLayout from "../layouts/DashboardLayout";
+import Dashboard from "../pages/dashboard/Dashboard";
 
 const AppRoutes = () => {
   return (
@@ -17,12 +19,12 @@ const AppRoutes = () => {
           path="/dashboard"
           element={
             <ProtectedRoute>
-              <div className="flex min-h-screen items-center justify-center bg-gray-50 text-gray-700">
-                Dashboard - Coming Soon
-              </div>
+              <DashboardLayout />
             </ProtectedRoute>
           }
-        />
+        >
+          <Route index element={<Dashboard />} />
+        </Route>
 
         <Route path="/" element={<Navigate to="/login" replace />} />
       </Routes>

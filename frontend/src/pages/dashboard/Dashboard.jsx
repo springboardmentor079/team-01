@@ -12,20 +12,19 @@ const roleLabels = {
 const cards = [
   {
     title: "Projects Overview",
-    description:
-      "Placeholder content for project progress and summary metrics.",
+    description: "project progress and summary metrics.",
   },
   {
     title: "Recent Activity",
-    description: "Placeholder content for latest updates and actions.",
+    description: "latest updates and actions.",
   },
   {
     title: "Notifications",
-    description: "Placeholder content for alerts and reminders.",
+    description: "alerts and reminders.",
   },
   {
     title: "Status Snapshot",
-    description: "Placeholder content for quick status indicators.",
+    description: "quick status indicators.",
   },
 ];
 
