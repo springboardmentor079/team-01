@@ -27,7 +27,7 @@ const DashboardLayout = () => {
     if (role === "project_manager") {
       return [
         { label: "Dashboard", to: "/dashboard" },
-        { label: "Projects", to: "/projects" },
+        { label: "Projects", to: "/dashboard/projects" },
       ];
     }
 
