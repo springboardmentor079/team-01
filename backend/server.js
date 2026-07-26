@@ -2,7 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
-const authRoutes = require("./src/routes/auth.routes");
+const apiRoutes = require("./src/routes/index");
+const errorMiddleware = require("./src/middlewares/error.middleware");
 const { protect } = require("./src/middlewares/auth.middleware");
 const { allowRoles } = require("./src/middlewares/role.middleware");
 require("dotenv").config();
@@ -16,7 +17,7 @@ app.use(express.json());
 app.use(cors());
 app.use(helmet());
 app.use(morgan("dev"));
-app.use("/api/auth", authRoutes);
+app.use("/api", apiRoutes);
 
 app.get("/", (req, res) => {
   res.status(200).json({
@@ -44,5 +45,7 @@ const startServer = async () => {
     console.log(`Server running on port ${PORT}`);
   });
 };
+
+app.use(errorMiddleware);
 
 startServer();
