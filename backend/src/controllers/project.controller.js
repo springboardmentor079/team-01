@@ -41,10 +41,9 @@ const getProjects = asyncHandler(async (req, res) => {
 });
 
 const getProjectById = asyncHandler(async (req, res) => {
-  const project = await Project.findById(req.params.id).populate(
-    "team",
-    "name email role",
-  );
+  const project = await Project.findById(req.params.id)
+    .populate("team", "name email role")
+    .populate("createdBy", "name email");
 
   if (!project) {
     return sendResponse(res, 404, false, "Project not found");
