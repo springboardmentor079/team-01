@@ -7,6 +7,14 @@ import {
   removeProject,
   clearCurrentProject,
 } from "../../features/projects/projectSlice";
+import { useState } from "react";
+import {
+  fetchMilestonesByProject,
+  addMilestone,
+  editMilestone,
+  removeMilestone,
+  clearMilestones,
+} from "../../features/milestones/milestoneSlice";
 
 const formatDate = (value) => {
   if (!value) {
@@ -17,6 +25,12 @@ const formatDate = (value) => {
   return Number.isNaN(date.getTime()) ? "N/A" : date.toLocaleDateString();
 };
 
+const toInputDate = (value) => {
+  if (!value) return "";
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? "" : date.toISOString().split("T")[0];
+};
+
 const ProjectDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -24,6 +38,84 @@ const ProjectDetails = () => {
   const { currentProject, loading, error } = useSelector(
     (state) => state.projects,
   );
+
+  const {
+    milestones,
+    loading: milestonesLoading,
+    error: milestonesError,
+  } = useSelector((state) => state.milestones);
+
+  const [showMilestoneForm, setShowMilestoneForm] = useState(false);
+  const [milestoneForm, setMilestoneForm] = useState({
+    title: "",
+    targetDate: "",
+  });
+  const [editingMilestoneId, setEditingMilestoneId] = useState(null);
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchMilestonesByProject(id));
+    }
+
+    return () => {
+      dispatch(clearMilestones());
+    };
+  }, [dispatch, id]);
+
+  const handleMilestoneFormChange = (event) => {
+    const { name, value } = event.target;
+    setMilestoneForm((current) => ({ ...current, [name]: value }));
+  };
+
+  const resetMilestoneForm = () => {
+    setMilestoneForm({ title: "", targetDate: "" });
+    setEditingMilestoneId(null);
+    setShowMilestoneForm(false);
+  };
+
+  const handleMilestoneSubmit = async (event) => {
+    event.preventDefault();
+
+    if (!milestoneForm.title || !milestoneForm.targetDate) {
+      return;
+    }
+
+    try {
+      if (editingMilestoneId) {
+        await dispatch(
+          editMilestone({ id: editingMilestoneId, updates: milestoneForm }),
+        ).unwrap();
+      } else {
+        await dispatch(
+          addMilestone({ ...milestoneForm, projectId: id }),
+        ).unwrap();
+      }
+      resetMilestoneForm();
+    } catch (submitError) {
+      // milestonesError from Redux state already surfaces the message
+    }
+  };
+
+  const handleEditMilestoneClick = (milestone) => {
+    setEditingMilestoneId(milestone._id);
+    setMilestoneForm({
+      title: milestone.title,
+      targetDate: toInputDate(milestone.targetDate),
+    });
+    setShowMilestoneForm(true);
+  };
+
+  const handleDeleteMilestone = (milestoneId) => {
+    if (window.confirm("Delete this milestone?")) {
+      dispatch(removeMilestone(milestoneId));
+    }
+  };
+
+  const handleMilestoneStatusChange = (milestone, newStatus) => {
+    dispatch(
+      editMilestone({ id: milestone._id, updates: { status: newStatus } }),
+    );
+  };
 
   useEffect(() => {
     if (id) {
@@ -191,6 +283,107 @@ const ProjectDetails = () => {
                     No team members assigned.
                   </p>
                 )}
+              </div>
+            </div>
+            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-semibold text-gray-900">
+                  Milestones
+                </h2>
+                <button
+                  type="button"
+                  onClick={() => setShowMilestoneForm((prev) => !prev)}
+                  className="rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-blue-700"
+                >
+                  {showMilestoneForm ? "Cancel" : "Add Milestone"}
+                </button>
+              </div>
+
+              {showMilestoneForm && (
+                <form
+                  onSubmit={handleMilestoneSubmit}
+                  className="mt-4 space-y-3 rounded-xl border border-gray-200 bg-gray-50 p-4"
+                >
+                  <input
+                    type="text"
+                    name="title"
+                    value={milestoneForm.title}
+                    onChange={handleMilestoneFormChange}
+                    placeholder="Milestone title"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm"
+                  />
+                  <input
+                    type="date"
+                    name="targetDate"
+                    value={milestoneForm.targetDate}
+                    onChange={handleMilestoneFormChange}
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm"
+                  />
+                  <button
+                    type="submit"
+                    className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                  >
+                    {editingMilestoneId ? "Update" : "Create"}
+                  </button>
+                </form>
+              )}
+
+              {milestonesError && (
+                <p className="mt-3 text-sm text-red-600">{milestonesError}</p>
+              )}
+
+              <div className="mt-4 space-y-3">
+                {milestonesLoading && (
+                  <p className="text-sm text-gray-500">Loading milestones...</p>
+                )}
+
+                {!milestonesLoading && milestones.length === 0 && (
+                  <p className="text-sm text-gray-500">No milestones yet.</p>
+                )}
+
+                {milestones.map((milestone) => (
+                  <div
+                    key={milestone._id}
+                    className="flex items-center justify-between rounded-xl border border-gray-200 bg-gray-50 px-4 py-3"
+                  >
+                    <div>
+                      <p className="font-medium text-gray-900">
+                        {milestone.title}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        Target: {formatDate(milestone.targetDate)}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <select
+                        value={milestone.status}
+                        onChange={(e) =>
+                          handleMilestoneStatusChange(milestone, e.target.value)
+                        }
+                        className="rounded-lg border border-gray-300 px-2 py-1 text-sm"
+                      >
+                        <option value="pending">pending</option>
+                        <option value="in-progress">in-progress</option>
+                        <option value="completed">completed</option>
+                        <option value="delayed">delayed</option>
+                      </select>
+                      <button
+                        type="button"
+                        onClick={() => handleEditMilestoneClick(milestone)}
+                        className="text-sm text-blue-600 hover:underline"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteMilestone(milestone._id)}
+                        className="text-sm text-red-600 hover:underline"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
