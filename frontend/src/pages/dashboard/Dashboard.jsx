@@ -1,14 +1,5 @@
 import { useSelector } from "react-redux";
 
-const roleLabels = {
-  admin: "Administrator",
-  project_manager: "Project Manager",
-  site_engineer: "Site Engineer",
-  contractor: "Contractor",
-  worker: "Worker",
-  client: "Client",
-};
-
 const cards = [
   {
     title: "Projects Overview",
@@ -30,7 +21,6 @@ const cards = [
 
 const Dashboard = () => {
   const { user } = useSelector((state) => state.auth);
-  const roleLabel = roleLabels[user?.role] || "User";
 
   return (
     <div className="space-y-8">
@@ -38,7 +28,6 @@ const Dashboard = () => {
         <h1 className="text-3xl font-bold tracking-tight text-gray-900">
           Welcome, {user?.name || "User"}
         </h1>
-        <p className="mt-2 text-sm text-gray-500">{roleLabel}</p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
