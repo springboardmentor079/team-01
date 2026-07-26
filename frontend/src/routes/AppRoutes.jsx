@@ -8,6 +8,7 @@ import Dashboard from "../pages/dashboard/Dashboard";
 import ProjectList from "../pages/projects/ProjectList";
 import ProjectCreate from "../pages/projects/ProjectCreate";
 import ProjectDetails from "../pages/projects/ProjectDetails";
+import ProjectEdit from "../pages/projects/ProjectEdit";
 
 const AppRoutes = () => {
   return (
@@ -30,6 +31,7 @@ const AppRoutes = () => {
           <Route path="projects" element={<ProjectList />} />
           <Route path="projects/create" element={<ProjectCreate />} />
           <Route path="projects/:id" element={<ProjectDetails />} />
+          <Route path="projects/:id/edit" element={<ProjectEdit />} />
         </Route>
 
         <Route path="/" element={<Navigate to="/login" replace />} />
