@@ -5,6 +5,9 @@ import Register from "../pages/auth/Register";
 import ProtectedRoute from "./ProtectedRoute";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Dashboard from "../pages/dashboard/Dashboard";
+import ProjectList from "../pages/projects/ProjectList";
+import ProjectCreate from "../pages/projects/ProjectCreate";
+import ProjectDetails from "../pages/projects/ProjectDetails";
 
 const AppRoutes = () => {
   return (
@@ -24,6 +27,9 @@ const AppRoutes = () => {
           }
         >
           <Route index element={<Dashboard />} />
+          <Route path="projects" element={<ProjectList />} />
+          <Route path="projects/create" element={<ProjectCreate />} />
+          <Route path="projects/:id" element={<ProjectDetails />} />
         </Route>
 
         <Route path="/" element={<Navigate to="/login" replace />} />

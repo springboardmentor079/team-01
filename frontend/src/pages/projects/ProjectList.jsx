@@ -10,8 +10,8 @@ const ProjectList = () => {
   );
 
   useEffect(() => {
-    dispatch(fetchProjects({ page: currentPage, limit: 10 }));
-  }, [dispatch, currentPage]);
+    dispatch(fetchProjects({ page: 1, limit: 10 }));
+  }, [dispatch]);
 
   const handlePageChange = (page) => {
     dispatch(fetchProjects({ page, limit: 10 }));
@@ -80,7 +80,12 @@ const ProjectList = () => {
                       className="transition hover:bg-gray-50"
                     >
                       <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
-                        {project.name}
+                        <Link
+                          to={`/dashboard/projects/${project._id}`}
+                          className="text-blue-600 hover:underline"
+                        >
+                          {project.name}
+                        </Link>
                       </td>
                       <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-600">
                         {project.category}
