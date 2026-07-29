@@ -9,6 +9,7 @@ import ProjectList from "../pages/projects/ProjectList";
 import ProjectCreate from "../pages/projects/ProjectCreate";
 import ProjectDetails from "../pages/projects/ProjectDetails";
 import ProjectEdit from "../pages/projects/ProjectEdit";
+import SiteProgressLog from "../pages/siteProgress/SiteProgressLog";
 
 const AppRoutes = () => {
   return (
@@ -32,6 +33,10 @@ const AppRoutes = () => {
           <Route path="projects/create" element={<ProjectCreate />} />
           <Route path="projects/:id" element={<ProjectDetails />} />
           <Route path="projects/:id/edit" element={<ProjectEdit />} />
+          <Route
+            path="projects/:projectId/site-progress"
+            element={<SiteProgressLog />}
+          />
         </Route>
 
         <Route path="/" element={<Navigate to="/login" replace />} />

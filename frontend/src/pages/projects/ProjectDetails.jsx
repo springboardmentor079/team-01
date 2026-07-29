@@ -192,6 +192,12 @@ const ProjectDetails = () => {
           >
             Delete
           </button>
+          <Link
+            to={`/dashboard/projects/${id}/site-progress`}
+            className="rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
+          >
+            Site Progress
+          </Link>
         </div>
       </div>
 
