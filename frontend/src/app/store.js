@@ -3,6 +3,7 @@ import authReducer from "../features/auth/authSlice";
 import projectReducer from "../features/projects/projectSlice";
 import milestoneReducer from "../features/milestones/milestoneSlice";
 import siteProgressReducer from "../features/siteProgress/siteProgressSlice";
+import resourceReducer from "../features/resources/resourceSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     projects: projectReducer,
     milestones: milestoneReducer,
     siteProgress: siteProgressReducer,
+    resources: resourceReducer,
   },
 });
 
