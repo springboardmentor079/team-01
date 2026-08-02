@@ -22,6 +22,8 @@ const DashboardLayout = () => {
         { label: "Dashboard", to: "/dashboard" },
         { label: "Users", to: "/users" },
         { label: "Resources", to: "/dashboard/resources" },
+        { label: "Workers", to: "/dashboard/workers" },
+        { label: "Attendance", to: "/dashboard/attendance" },
       ];
     }
 
@@ -30,6 +32,8 @@ const DashboardLayout = () => {
         { label: "Dashboard", to: "/dashboard" },
         { label: "Projects", to: "/dashboard/projects" },
         { label: "Resources", to: "/dashboard/resources" },
+        { label: "Workers", to: "/dashboard/workers" },
+        { label: "Attendance", to: "/dashboard/attendance" },
       ];
     }
 

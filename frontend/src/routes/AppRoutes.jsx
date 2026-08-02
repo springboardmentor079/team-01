@@ -11,6 +11,8 @@ import ProjectDetails from "../pages/projects/ProjectDetails";
 import ProjectEdit from "../pages/projects/ProjectEdit";
 import SiteProgressLog from "../pages/siteProgress/SiteProgressLog";
 import ResourceAllocation from "../pages/resources/ResourceAllocation";
+import WorkerManagement from "../pages/workers/WorkerManagement";
+import AttendanceTracking from "../pages/attendance/AttendanceTracking";
 
 const AppRoutes = () => {
   return (
@@ -39,6 +41,8 @@ const AppRoutes = () => {
             element={<SiteProgressLog />}
           />
           <Route path="resources" element={<ResourceAllocation />} />
+          <Route path="workers" element={<WorkerManagement />} />
+          <Route path="attendance" element={<AttendanceTracking />} />
         </Route>
 
         <Route path="/" element={<Navigate to="/login" replace />} />

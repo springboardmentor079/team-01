@@ -58,7 +58,7 @@ const updateAttendance = asyncHandler(async (req, res) => {
     req.params.id,
     { status: req.body.status },
     { new: true, runValidators: true },
-  );
+  ).populate("workerId", "name category");
 
   if (!record) {
     return sendResponse(res, 404, false, "Attendance record not found");
