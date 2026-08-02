@@ -30,7 +30,7 @@ const ProjectList = () => {
         </div>
 
         <Link
-          to="/projects/create"
+          to="/dashboard/projects/create"
           className="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700"
         >
           Create Project
