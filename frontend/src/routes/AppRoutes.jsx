@@ -10,6 +10,7 @@ import ProjectCreate from "../pages/projects/ProjectCreate";
 import ProjectDetails from "../pages/projects/ProjectDetails";
 import ProjectEdit from "../pages/projects/ProjectEdit";
 import SiteProgressLog from "../pages/siteProgress/SiteProgressLog";
+import ResourceAllocation from "../pages/resources/ResourceAllocation";
 
 const AppRoutes = () => {
   return (
@@ -37,6 +38,7 @@ const AppRoutes = () => {
             path="projects/:projectId/site-progress"
             element={<SiteProgressLog />}
           />
+          <Route path="resources" element={<ResourceAllocation />} />
         </Route>
 
         <Route path="/" element={<Navigate to="/login" replace />} />

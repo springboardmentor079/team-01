@@ -120,6 +120,28 @@ const unassignResource = asyncHandler(async (req, res) => {
   );
 });
 
+const markAvailable = asyncHandler(async (req, res) => {
+  const resource = await Resource.findById(req.params.id);
+
+  if (!resource) {
+    return sendResponse(res, 404, false, "Resource not found");
+  }
+
+  if (resource.status !== "maintenance") {
+    return sendResponse(
+      res,
+      400,
+      false,
+      "Resource is not currently under maintenance",
+    );
+  }
+
+  resource.status = "available";
+  await resource.save();
+
+  return sendResponse(res, 200, true, "Resource marked as available", resource);
+});
+
 const setMaintenanceStatus = asyncHandler(async (req, res) => {
   const resource = await Resource.findById(req.params.id);
 
@@ -149,4 +171,5 @@ module.exports = {
   allocateResource,
   unassignResource,
   setMaintenanceStatus,
+  markAvailable,
 };

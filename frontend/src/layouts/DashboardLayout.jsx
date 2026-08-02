@@ -21,6 +21,7 @@ const DashboardLayout = () => {
       return [
         { label: "Dashboard", to: "/dashboard" },
         { label: "Users", to: "/users" },
+        { label: "Resources", to: "/dashboard/resources" },
       ];
     }
 
@@ -28,6 +29,7 @@ const DashboardLayout = () => {
       return [
         { label: "Dashboard", to: "/dashboard" },
         { label: "Projects", to: "/dashboard/projects" },
+        { label: "Resources", to: "/dashboard/resources" },
       ];
     }
 

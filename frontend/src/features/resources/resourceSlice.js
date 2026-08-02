@@ -7,6 +7,7 @@ import {
   allocateResource,
   unassignResource,
   setResourceMaintenance,
+  markResourceAvailable,
 } from "../../api/resourceApi";
 
 const rejectHelper = (error, fallback) =>
@@ -94,6 +95,19 @@ export const setMaintenanceThunk = createAsyncThunk(
   },
 );
 
+export const markAvailableThunk = createAsyncThunk(
+  "resources/markAvailable",
+  async (id, { rejectWithValue }) => {
+    try {
+      return await markResourceAvailable(id);
+    } catch (error) {
+      return rejectWithValue(
+        rejectHelper(error, "Failed to mark resource available"),
+      );
+    }
+  },
+);
+
 const initialState = {
   resources: [],
   loading: false,
@@ -168,6 +182,14 @@ const resourceSlice = createSlice({
           state.resources = replaceResourceInList(state.resources, updated);
       })
       .addCase(setMaintenanceThunk.rejected, (state, action) => {
+        state.error = action.payload;
+      })
+      .addCase(markAvailableThunk.fulfilled, (state, action) => {
+        const updated = action.payload?.data;
+        if (updated)
+          state.resources = replaceResourceInList(state.resources, updated);
+      })
+      .addCase(markAvailableThunk.rejected, (state, action) => {
         state.error = action.payload;
       });
   },

@@ -36,3 +36,8 @@ export const setResourceMaintenance = async (id) => {
   const response = await axiosInstance.patch(`/resources/${id}/maintenance`);
   return response.data;
 };
+
+export const markResourceAvailable = async (id) => {
+  const response = await axiosInstance.patch(`/resources/${id}/mark-available`);
+  return response.data;
+};

@@ -15,6 +15,7 @@ const {
   allocateResource,
   unassignResource,
   setMaintenanceStatus,
+  markAvailable,
 } = require("../controllers/resource.controller");
 
 const router = Router();
@@ -53,6 +54,11 @@ router.patch(
   "/:id/maintenance",
   allow("admin", "project_manager"),
   setMaintenanceStatus,
+);
+router.patch(
+  "/:id/mark-available",
+  allow("admin", "project_manager"),
+  markAvailable,
 );
 
 module.exports = router;
