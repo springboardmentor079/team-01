@@ -20,6 +20,7 @@ const DashboardLayout = () => {
     if (role === "admin") {
       return [
         { label: "Dashboard", to: "/dashboard" },
+        { label: "Projects", to: "/dashboard/projects" },
         { label: "Users", to: "/users" },
         { label: "Resources", to: "/dashboard/resources" },
         { label: "Workers", to: "/dashboard/workers" },
