@@ -13,6 +13,7 @@ import SiteProgressLog from "../pages/siteProgress/SiteProgressLog";
 import ResourceAllocation from "../pages/resources/ResourceAllocation";
 import WorkerManagement from "../pages/workers/WorkerManagement";
 import AttendanceTracking from "../pages/attendance/AttendanceTracking";
+import InventoryManagement from "../pages/inventory/InventoryManagement";
 
 const AppRoutes = () => {
   return (
@@ -43,6 +44,7 @@ const AppRoutes = () => {
           <Route path="resources" element={<ResourceAllocation />} />
           <Route path="workers" element={<WorkerManagement />} />
           <Route path="attendance" element={<AttendanceTracking />} />
+          <Route path="inventory" element={<InventoryManagement />} />
         </Route>
 
         <Route path="/" element={<Navigate to="/login" replace />} />

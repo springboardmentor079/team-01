@@ -198,3 +198,22 @@ exports.getInventoryLogs = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.getAllInventory = async (req, res, next) => {
+  try {
+    const { projectId, status } = req.query;
+    const filter = {};
+    if (projectId) filter.projectId = projectId;
+
+    let items = await Inventory.find(filter).populate("projectId", "name");
+    items = items.map(withStatus);
+
+    if (status) {
+      items = items.filter((item) => item.status === status);
+    }
+
+    res.json(items);
+  } catch (err) {
+    next(err);
+  }
+};

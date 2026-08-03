@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {
   createInventory,
+  getAllInventory,
   getInventoryByProject,
   getInventoryById,
   updateInventory,
@@ -22,6 +23,7 @@ const { protect } = require("../middlewares/auth.middleware");
 const { allowRoles } = require("../middlewares/role.middleware");
 
 router.post("/", protect, createInventoryValidator, createInventory);
+router.get("/", protect, getAllInventory);
 router.get("/project/:projectId", protect, getInventoryByProject);
 router.get("/:id", protect, idParamValidator, getInventoryById);
 router.put("/:id", protect, updateInventoryValidator, updateInventory);

@@ -6,6 +6,7 @@ import siteProgressReducer from "../features/siteProgress/siteProgressSlice";
 import resourceReducer from "../features/resources/resourceSlice";
 import workerReducer from "../features/workers/workerSlice";
 import attendanceReducer from "../features/attendance/attendanceSlice";
+import inventoryReducer from "../features/inventory/inventorySlice";
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     resources: resourceReducer,
     workers: workerReducer,
     attendance: attendanceReducer,
+    inventory: inventoryReducer,
   },
 });
 
