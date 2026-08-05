@@ -82,7 +82,7 @@ const ProjectCreate = () => {
         }),
       ).unwrap();
 
-      navigate("/projects");
+      navigate("/dashboard/projects");
     } catch (submitError) {
       // Redux slice handles the error state; keep local flow quiet here.
     }
