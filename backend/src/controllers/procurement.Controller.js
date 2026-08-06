@@ -2,6 +2,7 @@ const Procurement = require("../models/Procurement");
 const Inventory = require("../models/Inventory");
 const InventoryLog = require("../models/InventoryLog");
 const { validationResult } = require("express-validator");
+const notificationService = require("../services/notification.service");
 
 exports.createProcurement = async (req, res, next) => {
   try {
@@ -62,16 +63,22 @@ exports.approveProcurement = async (req, res, next) => {
     if (!procurement)
       return res.status(404).json({ message: "Procurement not found" });
     if (procurement.status !== "requested") {
-      return res
-        .status(400)
-        .json({
-          message: `Cannot approve from status '${procurement.status}'`,
-        });
+      return res.status(400).json({
+        message: `Cannot approve from status '${procurement.status}'`,
+      });
     }
 
     procurement.status = "approved";
     procurement.approvedBy = req.user?.id;
     await procurement.save();
+
+    await notificationService.createNotification({
+      userId: procurement.requestedBy,
+      type: "procurement_status",
+      message: `Your procurement request for "${procurement.itemName}" was approved.`,
+      entityType: "Procurement",
+      entityId: procurement._id,
+    });
 
     res.json(procurement);
   } catch (err) {
@@ -94,6 +101,14 @@ exports.orderProcurement = async (req, res, next) => {
     procurement.orderedAt = new Date();
     await procurement.save();
 
+    await notificationService.createNotification({
+      userId: procurement.requestedBy,
+      type: "procurement_status",
+      message: `Your procurement request for "${procurement.itemName}" has been ordered.`,
+      entityType: "Procurement",
+      entityId: procurement._id,
+    });
+
     res.json(procurement);
   } catch (err) {
     next(err);
@@ -112,11 +127,9 @@ exports.deliverProcurement = async (req, res, next) => {
     if (!procurement)
       return res.status(404).json({ message: "Procurement not found" });
     if (procurement.status !== "ordered") {
-      return res
-        .status(400)
-        .json({
-          message: `Cannot deliver from status '${procurement.status}'`,
-        });
+      return res.status(400).json({
+        message: `Cannot deliver from status '${procurement.status}'`,
+      });
     }
 
     const inventoryItem = await Inventory.findById(procurement.inventoryId);
@@ -143,6 +156,14 @@ exports.deliverProcurement = async (req, res, next) => {
     if (notes) procurement.notes = notes;
     await procurement.save();
 
+    await notificationService.createNotification({
+      userId: procurement.requestedBy,
+      type: "procurement_status",
+      message: `${deliveredQuantity} ${inventoryItem.unit} of "${procurement.itemName}" was delivered.`,
+      entityType: "Procurement",
+      entityId: procurement._id,
+    });
+
     res.json(procurement);
   } catch (err) {
     next(err);
@@ -164,6 +185,14 @@ exports.cancelProcurement = async (req, res, next) => {
     procurement.status = "cancelled";
     if (notes) procurement.notes = notes;
     await procurement.save();
+
+    await notificationService.createNotification({
+      userId: procurement.requestedBy,
+      type: "procurement_status",
+      message: `Your procurement request for "${procurement.itemName}" was cancelled.`,
+      entityType: "Procurement",
+      entityId: procurement._id,
+    });
 
     res.json(procurement);
   } catch (err) {

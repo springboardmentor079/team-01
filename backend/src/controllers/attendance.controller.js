@@ -1,10 +1,30 @@
 const Attendance = require("../models/Attendance");
 const asyncHandler = require("../utils/asyncHandler");
 const sendResponse = require("../utils/apiResponse");
+const Project = require("../models/Project");
+const notificationService = require("../services/notification.service");
 
 const markAttendance = asyncHandler(async (req, res) => {
   try {
     const record = await Attendance.create(req.body);
+
+    if (record.status === "absent") {
+      const project = await Project.findById(record.projectId);
+      if (project?.createdBy) {
+        const populatedRecord = await record.populate(
+          "workerId",
+          "name category",
+        );
+        await notificationService.createNotification({
+          userId: project.createdBy,
+          type: "attendance_flag",
+          message: `${populatedRecord.workerId?.name || "A worker"} was marked absent on ${new Date(record.date).toLocaleDateString()}.`,
+          entityType: "Attendance",
+          entityId: record._id,
+        });
+      }
+    }
+
     return sendResponse(
       res,
       201,
@@ -54,14 +74,32 @@ const getAttendanceByWorker = asyncHandler(async (req, res) => {
 });
 
 const updateAttendance = asyncHandler(async (req, res) => {
+  const existingRecord = await Attendance.findById(req.params.id);
+  if (!existingRecord) {
+    return sendResponse(res, 404, false, "Attendance record not found");
+  }
+
+  const wasAbsent = existingRecord.status === "absent";
+
   const record = await Attendance.findByIdAndUpdate(
     req.params.id,
     { status: req.body.status },
     { new: true, runValidators: true },
   ).populate("workerId", "name category");
 
-  if (!record) {
-    return sendResponse(res, 404, false, "Attendance record not found");
+  // Only notify if this update is newly marking the worker absent
+  // (not if it was already absent, and not for other status changes)
+  if (req.body.status === "absent" && !wasAbsent) {
+    const project = await Project.findById(record.projectId);
+    if (project?.createdBy) {
+      await notificationService.createNotification({
+        userId: project.createdBy,
+        type: "attendance_flag",
+        message: `${record.workerId?.name || "A worker"} was marked absent on ${new Date(record.date).toLocaleDateString()}.`,
+        entityType: "Attendance",
+        entityId: record._id,
+      });
+    }
   }
 
   return sendResponse(
