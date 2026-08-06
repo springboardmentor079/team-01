@@ -7,6 +7,8 @@ import resourceReducer from "../features/resources/resourceSlice";
 import workerReducer from "../features/workers/workerSlice";
 import attendanceReducer from "../features/attendance/attendanceSlice";
 import inventoryReducer from "../features/inventory/inventorySlice";
+import vendorReducer from "../features/vendors/vendorSlice";
+import procurementReducer from "../features/procurement/procurementSlice";
 
 const store = configureStore({
   reducer: {
@@ -18,6 +20,8 @@ const store = configureStore({
     workers: workerReducer,
     attendance: attendanceReducer,
     inventory: inventoryReducer,
+    vendors: vendorReducer,
+    procurement: procurementReducer,
   },
 });
 

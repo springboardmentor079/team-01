@@ -26,6 +26,8 @@ const DashboardLayout = () => {
         { label: "Workers", to: "/dashboard/workers" },
         { label: "Attendance", to: "/dashboard/attendance" },
         { label: "Inventory", to: "/dashboard/inventory" },
+        { label: "Vendors", to: "/dashboard/vendors" },
+        { label: "Procurement", to: "/dashboard/procurement" },
       ];
     }
 
@@ -37,6 +39,8 @@ const DashboardLayout = () => {
         { label: "Workers", to: "/dashboard/workers" },
         { label: "Attendance", to: "/dashboard/attendance" },
         { label: "Inventory", to: "/dashboard/inventory" },
+        { label: "Vendors", to: "/dashboard/vendors" },
+        { label: "Procurement", to: "/dashboard/procurement" },
       ];
     }
 
