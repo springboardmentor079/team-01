@@ -9,6 +9,7 @@ import attendanceReducer from "../features/attendance/attendanceSlice";
 import inventoryReducer from "../features/inventory/inventorySlice";
 import vendorReducer from "../features/vendors/vendorSlice";
 import procurementReducer from "../features/procurement/procurementSlice";
+import notificationReducer from "../features/notifications/notificationSlice";
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
     inventory: inventoryReducer,
     vendors: vendorReducer,
     procurement: procurementReducer,
+    notifications: notificationReducer,
   },
 });
 

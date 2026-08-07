@@ -11,6 +11,7 @@ import {
 import { fetchProjects } from "../../features/projects/projectSlice";
 import { fetchVendors } from "../../features/vendors/vendorSlice";
 import { fetchInventory } from "../../features/inventory/inventorySlice";
+import { fetchNotifications } from "../../features/notifications/notificationSlice";
 
 const statusStyles = {
   requested: "bg-gray-100 text-gray-700",
@@ -99,12 +100,14 @@ const ProcurementDashboard = () => {
     }
   };
 
-  const handleApprove = (id) => {
-    dispatch(approveProcurementThunk(id));
+  const handleApprove = async (id) => {
+    await dispatch(approveProcurementThunk(id));
+    dispatch(fetchNotifications());
   };
 
-  const handleOrder = (id) => {
-    dispatch(orderProcurementThunk(id));
+  const handleOrder = async (id) => {
+    await dispatch(orderProcurementThunk(id));
+    dispatch(fetchNotifications());
   };
 
   const openDeliver = (id) => {
@@ -127,17 +130,19 @@ const ProcurementDashboard = () => {
           data: { deliveredQuantity, notes: deliverForm.notes },
         }),
       ).unwrap();
+      dispatch(fetchNotifications());
       closeDeliver();
     } catch (deliverError) {
       // error surfaces via Redux state
     }
   };
 
-  const handleCancel = (id) => {
+  const handleCancel = async (id) => {
     if (window.confirm("Cancel this procurement request?")) {
-      dispatch(
+      await dispatch(
         cancelProcurementThunk({ id, data: { notes: "Cancelled by user" } }),
       );
+      dispatch(fetchNotifications());
     }
   };
 

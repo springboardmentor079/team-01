@@ -19,7 +19,12 @@ exports.createProcurement = async (req, res, next) => {
       requestedBy: req.user?.id,
     });
 
-    res.status(201).json(procurement);
+    const populatedProcurement = await Procurement.findById(procurement._id)
+      .populate("projectId", "name")
+      .populate("vendorId", "name")
+      .populate("inventoryId", "itemName");
+
+    res.status(201).json(populatedProcurement);
   } catch (err) {
     next(err);
   }

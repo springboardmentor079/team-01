@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/auth/authSlice";
+import NotificationBell from "../components/notifications/NotificationBell";
 
 const DashboardLayout = () => {
   const { user } = useSelector((state) => state.auth);
@@ -72,6 +73,7 @@ const DashboardLayout = () => {
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="flex items-center justify-end border-b border-gray-200 bg-white px-6 py-4">
           <div className="flex items-center gap-4">
+            <NotificationBell />
             <div className="text-right">
               <p className="text-sm font-semibold text-gray-900">
                 {user?.name || "User"}
