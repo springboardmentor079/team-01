@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/auth/authSlice";
 import NotificationBell from "../components/notifications/NotificationBell";
@@ -51,7 +51,7 @@ const DashboardLayout = () => {
   const navLinks = getNavLinks();
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex h-screen overflow-hidden bg-gray-100">
       <aside className="w-64 flex-shrink-0 bg-gray-900 text-white">
         <div className="border-b border-gray-800 px-6 py-5">
           <h1 className="text-2xl font-bold tracking-tight">BuildTrack</h1>
@@ -59,13 +59,20 @@ const DashboardLayout = () => {
 
         <nav className="space-y-1 px-4 py-6">
           {navLinks.map((link) => (
-            <Link
+            <NavLink
               key={link.to}
               to={link.to}
-              className="block rounded-lg px-4 py-3 text-sm font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white"
+              end={link.to === "/dashboard"}
+              className={({ isActive }) =>
+                `block rounded-lg px-4 py-3 text-sm font-medium transition ${
+                  isActive
+                    ? "bg-gray-800 text-white"
+                    : "text-gray-300 hover:bg-gray-800 hover:text-white"
+                }`
+              }
             >
               {link.label}
-            </Link>
+            </NavLink>
           ))}
         </nav>
       </aside>
@@ -92,7 +99,7 @@ const DashboardLayout = () => {
           </div>
         </header>
 
-        <main className="flex-1 p-6">
+        <main className="flex-1 overflow-y-auto p-6">
           <Outlet />
         </main>
       </div>
