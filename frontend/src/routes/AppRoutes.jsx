@@ -16,6 +16,7 @@ import AttendanceTracking from "../pages/attendance/AttendanceTracking";
 import InventoryManagement from "../pages/inventory/InventoryManagement";
 import VendorManagement from "../pages/vendors/VendorManagement";
 import ProcurementDashboard from "../pages/procurement/ProcurementDashboard";
+import ReportsPage from "../pages/reports/ReportsPage";
 
 const AppRoutes = () => {
   return (
@@ -49,6 +50,7 @@ const AppRoutes = () => {
           <Route path="inventory" element={<InventoryManagement />} />
           <Route path="vendors" element={<VendorManagement />} />
           <Route path="procurement" element={<ProcurementDashboard />} />
+          <Route path="reports" element={<ReportsPage />} />
         </Route>
 
         <Route path="/" element={<Navigate to="/login" replace />} />

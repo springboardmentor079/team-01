@@ -10,6 +10,7 @@ import inventoryReducer from "../features/inventory/inventorySlice";
 import vendorReducer from "../features/vendors/vendorSlice";
 import procurementReducer from "../features/procurement/procurementSlice";
 import notificationReducer from "../features/notifications/notificationSlice";
+import reportReducer from "../features/reports/reportSlice";
 
 const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ const store = configureStore({
     vendors: vendorReducer,
     procurement: procurementReducer,
     notifications: notificationReducer,
+    reports: reportReducer,
   },
 });
 

@@ -29,6 +29,7 @@ const DashboardLayout = () => {
         { label: "Inventory", to: "/dashboard/inventory" },
         { label: "Vendors", to: "/dashboard/vendors" },
         { label: "Procurement", to: "/dashboard/procurement" },
+        { label: "Reports", to: "/dashboard/reports" },
       ];
     }
 
@@ -42,6 +43,7 @@ const DashboardLayout = () => {
         { label: "Inventory", to: "/dashboard/inventory" },
         { label: "Vendors", to: "/dashboard/vendors" },
         { label: "Procurement", to: "/dashboard/procurement" },
+        { label: "Reports", to: "/dashboard/reports" },
       ];
     }
 
