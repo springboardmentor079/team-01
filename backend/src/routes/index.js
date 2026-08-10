@@ -10,6 +10,7 @@ const inventoryRoutes = require("./inventory.routes");
 const vendorRoutes = require("./vendor.routes");
 const procurementRoutes = require("./procurement.routes");
 const notificationRoutes = require("./notification.routes");
+const reportRoutes = require("./report.routes");
 const router = Router();
 
 router.use("/auth", authRoutes);
@@ -23,5 +24,6 @@ router.use("/attendance", attendanceRoutes);
 router.use("/vendors", vendorRoutes);
 router.use("/procurement", procurementRoutes);
 router.use("/notifications", notificationRoutes);
+router.use("/reports", reportRoutes);
 
 module.exports = router;
