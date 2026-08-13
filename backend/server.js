@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
@@ -6,7 +8,6 @@ const apiRoutes = require("./src/routes/index");
 const errorMiddleware = require("./src/middlewares/error.middleware");
 const { protect } = require("./src/middlewares/auth.middleware");
 const { allowRoles } = require("./src/middlewares/role.middleware");
-require("dotenv").config();
 
 const connectDB = require("./src/config/db");
 
