@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import AttachmentsPanel from "../../components/documents/AttachmentsPanel";
 import {
   fetchProcurements,
   addProcurement,
@@ -30,6 +31,7 @@ const ProcurementDashboard = () => {
   const { vendors } = useSelector((state) => state.vendors);
   const { items: inventoryItems } = useSelector((state) => state.inventory);
 
+  const [selectedRequest, setSelectedRequest] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({
     projectId: "",
@@ -415,6 +417,13 @@ const ProcurementDashboard = () => {
                       </div>
                     ) : (
                       <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setSelectedRequest(req)}
+                          className="text-sm text-gray-600 hover:underline"
+                        >
+                          View Details
+                        </button>
                         {req.status === "requested" && (
                           <button
                             type="button"
@@ -461,6 +470,74 @@ const ProcurementDashboard = () => {
           </tbody>
         </table>
       </div>
+      {selectedRequest && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="w-full max-w-2xl rounded-2xl bg-white p-6 shadow-xl">
+            <div className="mb-4 flex items-start justify-between">
+              <div>
+                <h2 className="text-xl font-semibold text-gray-900">
+                  {selectedRequest.itemName}
+                </h2>
+                <span
+                  className={`mt-1 inline-block rounded-full px-2.5 py-1 text-xs font-medium ${statusStyles[selectedRequest.status]}`}
+                >
+                  {selectedRequest.status}
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedRequest(null)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="mb-6 grid grid-cols-2 gap-4 text-sm">
+              <div>
+                <p className="text-gray-500">Project</p>
+                <p className="font-medium text-gray-900">
+                  {selectedRequest.projectId?.name || "—"}
+                </p>
+              </div>
+              <div>
+                <p className="text-gray-500">Vendor</p>
+                <p className="font-medium text-gray-900">
+                  {selectedRequest.vendorId?.name || "—"}
+                </p>
+              </div>
+              <div>
+                <p className="text-gray-500">Quantity</p>
+                <p className="font-medium text-gray-900">
+                  {selectedRequest.quantity}
+                </p>
+              </div>
+              <div>
+                <p className="text-gray-500">Unit Price</p>
+                <p className="font-medium text-gray-900">
+                  {selectedRequest.unitPrice
+                    ? `₹${selectedRequest.unitPrice}`
+                    : "—"}
+                </p>
+              </div>
+              {selectedRequest.notes && (
+                <div className="col-span-2">
+                  <p className="text-gray-500">Notes</p>
+                  <p className="font-medium text-gray-900">
+                    {selectedRequest.notes}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            <AttachmentsPanel
+              projectId={selectedRequest.projectId?._id}
+              entityType="Procurement"
+              entityId={selectedRequest._id}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
