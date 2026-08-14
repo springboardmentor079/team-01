@@ -12,6 +12,7 @@ const procurementRoutes = require("./procurement.routes");
 const notificationRoutes = require("./notification.routes");
 const reportRoutes = require("./report.routes");
 const documentRoutes = require("./document.routes");
+const expenseRoutes = require("./expense.routes");
 const router = Router();
 
 router.use("/auth", authRoutes);
@@ -27,5 +28,6 @@ router.use("/procurement", procurementRoutes);
 router.use("/notifications", notificationRoutes);
 router.use("/reports", reportRoutes);
 router.use("/documents", documentRoutes);
+router.use("/expenses", require("./expense.routes"));
 
 module.exports = router;
