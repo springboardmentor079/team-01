@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import BudgetOverview from "../../components/budget/BudgetOverview";
 import {
   fetchProjectById,
   closeProjectThunk,
@@ -392,6 +393,8 @@ const ProjectDetails = () => {
                 ))}
               </div>
             </div>
+
+            <BudgetOverview projectId={currentProject._id} />
           </div>
 
           <div className="space-y-6">

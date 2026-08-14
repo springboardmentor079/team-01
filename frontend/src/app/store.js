@@ -12,6 +12,7 @@ import procurementReducer from "../features/procurement/procurementSlice";
 import notificationReducer from "../features/notifications/notificationSlice";
 import reportReducer from "../features/reports/reportSlice";
 import documentReducer from "../features/documents/documentSlice";
+import expenseReducer from "../features/expenses/expenseSlice";
 
 const store = configureStore({
   reducer: {
@@ -28,6 +29,7 @@ const store = configureStore({
     notifications: notificationReducer,
     reports: reportReducer,
     documents: documentReducer,
+    expenses: expenseReducer,
   },
 });
 
