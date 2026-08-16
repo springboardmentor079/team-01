@@ -5,6 +5,7 @@ import Register from "../pages/auth/Register";
 import ProtectedRoute from "./ProtectedRoute";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Dashboard from "../pages/dashboard/Dashboard";
+import PMDashboard from "../pages/dashboard/PMDashboard";
 import ProjectList from "../pages/projects/ProjectList";
 import ProjectCreate from "../pages/projects/ProjectCreate";
 import ProjectDetails from "../pages/projects/ProjectDetails";
@@ -51,6 +52,7 @@ const AppRoutes = () => {
           <Route path="vendors" element={<VendorManagement />} />
           <Route path="procurement" element={<ProcurementDashboard />} />
           <Route path="reports" element={<ReportsPage />} />
+          <Route path="pm/:projectId" element={<PMDashboard />} />
         </Route>
 
         <Route path="/" element={<Navigate to="/login" replace />} />

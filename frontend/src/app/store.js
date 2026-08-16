@@ -13,6 +13,7 @@ import notificationReducer from "../features/notifications/notificationSlice";
 import reportReducer from "../features/reports/reportSlice";
 import documentReducer from "../features/documents/documentSlice";
 import expenseReducer from "../features/expenses/expenseSlice";
+import dashboardReducer from "../features/dashboard/dashboardSlice";
 
 const store = configureStore({
   reducer: {
@@ -30,6 +31,7 @@ const store = configureStore({
     reports: reportReducer,
     documents: documentReducer,
     expenses: expenseReducer,
+    dashboard: dashboardReducer,
   },
 });
 

@@ -171,6 +171,14 @@ const ProjectDetails = () => {
         </div>
 
         <div className="flex flex-wrap gap-3">
+          {currentProject && (
+            <Link
+              to={`/dashboard/pm/${currentProject._id}`}
+              className="bg-blue-600 text-white px-4 py-2 rounded text-sm"
+            >
+              View Dashboard
+            </Link>
+          )}
           <Link
             to={`/dashboard/projects/${id}/edit`}
             className="rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
