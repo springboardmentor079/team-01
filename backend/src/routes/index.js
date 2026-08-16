@@ -13,6 +13,7 @@ const notificationRoutes = require("./notification.routes");
 const reportRoutes = require("./report.routes");
 const documentRoutes = require("./document.routes");
 const expenseRoutes = require("./expense.routes");
+const dashboardRoutes = require("./dashboard.routes");
 const router = Router();
 
 router.use("/auth", authRoutes);
@@ -29,5 +30,6 @@ router.use("/notifications", notificationRoutes);
 router.use("/reports", reportRoutes);
 router.use("/documents", documentRoutes);
 router.use("/expenses", require("./expense.routes"));
+router.use("/dashboard", require("./dashboard.routes"));
 
 module.exports = router;
