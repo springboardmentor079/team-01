@@ -14,6 +14,7 @@ const reportRoutes = require("./report.routes");
 const documentRoutes = require("./document.routes");
 const expenseRoutes = require("./expense.routes");
 const dashboardRoutes = require("./dashboard.routes");
+const userRoutes = require("./user.routes");
 const router = Router();
 
 router.use("/auth", authRoutes);
@@ -31,5 +32,6 @@ router.use("/reports", reportRoutes);
 router.use("/documents", documentRoutes);
 router.use("/expenses", require("./expense.routes"));
 router.use("/dashboard", require("./dashboard.routes"));
+router.use("/users", require("./user.routes"));
 
 module.exports = router;

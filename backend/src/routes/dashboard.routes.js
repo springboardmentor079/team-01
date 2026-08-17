@@ -1,11 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-const { getPMDashboard } = require("../controllers/dashboard.controller");
 const { param } = require("express-validator");
 const { validate } = require("../middlewares/validate.middleware");
 const { protect } = require("../middlewares/auth.middleware");
 const { allowRoles } = require("../middlewares/role.middleware");
+const {
+  getPMDashboard,
+  getAdminDashboard,
+} = require("../controllers/dashboard.controller");
 
 router.use(protect);
 
@@ -16,5 +19,7 @@ router.get(
   validate,
   getPMDashboard,
 );
+
+router.get("/admin", allowRoles("admin"), getAdminDashboard);
 
 module.exports = router;

@@ -7,6 +7,10 @@ const Procurement = require("../models/Procurement");
 const Expense = require("../models/Expense");
 const asyncHandler = require("../utils/asyncHandler");
 const apiResponse = require("../utils/apiResponse");
+const User = require("../models/User");
+const Notification = require("../models/Notification");
+const Worker = require("../models/Worker");
+const Inventory = require("../models/Inventory");
 
 // GET /api/dashboard/pm/:projectId
 const getPMDashboard = asyncHandler(async (req, res) => {
@@ -152,4 +156,107 @@ const getPMDashboard = asyncHandler(async (req, res) => {
   });
 });
 
-module.exports = { getPMDashboard };
+// GET /api/dashboard/admin
+const getAdminDashboard = asyncHandler(async (req, res) => {
+  const [
+    userStats,
+    recentUsers,
+    projectStatusStats,
+    projectCategoryStats,
+    resourceCount,
+    workerCount,
+    procurementStats,
+    totalSpend,
+    lowStockCount,
+    recentActivity,
+  ] = await Promise.all([
+    // Users by role
+    User.aggregate([{ $group: { _id: "$role", count: { $sum: 1 } } }]),
+
+    // 5 most recently registered users
+    User.find()
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .select("name email role createdAt"),
+
+    // Projects by status
+    Project.aggregate([{ $group: { _id: "$status", count: { $sum: 1 } } }]),
+
+    // Projects by category
+    Project.aggregate([{ $group: { _id: "$category", count: { $sum: 1 } } }]),
+
+    // Total resources (system-wide)
+    Resource.countDocuments(),
+
+    // Total registered workers
+    Worker.countDocuments(),
+
+    // Procurement by status, system-wide
+    Procurement.aggregate([
+      {
+        $group: {
+          _id: "$status",
+          count: { $sum: 1 },
+          totalAmount: { $sum: "$amount" },
+        },
+      },
+    ]),
+
+    // Total spend across all projects
+    Expense.aggregate([{ $group: { _id: null, total: { $sum: "$amount" } } }]),
+
+    // Items below minThreshold, system-wide
+    Inventory.countDocuments({
+      $expr: { $lt: ["$currentStock", "$minThreshold"] },
+    }),
+
+    // Last 20 notifications as the activity feed
+    Notification.find()
+      .sort({ createdAt: -1 })
+      .limit(20)
+      .populate("userId", "name role"),
+  ]);
+
+  const totalUsers = userStats.reduce((sum, r) => sum + r.count, 0);
+  const totalProjects = projectStatusStats.reduce((sum, p) => sum + p.count, 0);
+
+  return apiResponse(res, 200, true, "Admin dashboard data fetched", {
+    users: {
+      total: totalUsers,
+      byRole: userStats.map((r) => ({ role: r._id, count: r.count })),
+      recentlyRegistered: recentUsers,
+    },
+    projects: {
+      total: totalProjects,
+      byStatus: projectStatusStats.map((p) => ({
+        status: p._id,
+        count: p.count,
+      })),
+      byCategory: projectCategoryStats.map((c) => ({
+        category: c._id,
+        count: c.count,
+      })),
+    },
+    systemAnalytics: {
+      totalResources: resourceCount,
+      totalWorkers: workerCount,
+      totalSpendAllProjects: totalSpend[0]?.total || 0,
+      lowStockItems: lowStockCount,
+      procurement: procurementStats.map((p) => ({
+        status: p._id,
+        count: p.count,
+        totalAmount: p.totalAmount,
+      })),
+    },
+    activityLog: recentActivity.map((n) => ({
+      id: n._id,
+      type: n.type,
+      message: n.message,
+      user: n.userId ? { name: n.userId.name, role: n.userId.role } : null,
+      isRead: n.isRead,
+      createdAt: n.createdAt,
+    })),
+  });
+});
+
+module.exports = { getPMDashboard, getAdminDashboard };
