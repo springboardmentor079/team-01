@@ -14,6 +14,7 @@ import reportReducer from "../features/reports/reportSlice";
 import documentReducer from "../features/documents/documentSlice";
 import expenseReducer from "../features/expenses/expenseSlice";
 import dashboardReducer from "../features/dashboard/dashboardSlice";
+import userReducer from "../features/users/userSlice";
 
 const store = configureStore({
   reducer: {
@@ -32,6 +33,7 @@ const store = configureStore({
     documents: documentReducer,
     expenses: expenseReducer,
     dashboard: dashboardReducer,
+    users: userReducer,
   },
 });
 

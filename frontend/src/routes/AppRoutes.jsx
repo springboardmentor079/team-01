@@ -18,6 +18,8 @@ import InventoryManagement from "../pages/inventory/InventoryManagement";
 import VendorManagement from "../pages/vendors/VendorManagement";
 import ProcurementDashboard from "../pages/procurement/ProcurementDashboard";
 import ReportsPage from "../pages/reports/ReportsPage";
+import UserManagement from "../pages/users/UserManagement";
+import AdminDashboard from "../pages/dashboard/AdminDashboard";
 
 const AppRoutes = () => {
   return (
@@ -53,6 +55,8 @@ const AppRoutes = () => {
           <Route path="procurement" element={<ProcurementDashboard />} />
           <Route path="reports" element={<ReportsPage />} />
           <Route path="pm/:projectId" element={<PMDashboard />} />
+          <Route path="users" element={<UserManagement />} />
+          <Route path="admin" element={<AdminDashboard />} />
         </Route>
 
         <Route path="/" element={<Navigate to="/login" replace />} />

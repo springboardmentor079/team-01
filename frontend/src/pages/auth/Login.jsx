@@ -25,7 +25,12 @@ const Login = () => {
       const token = authData.token || authData.data?.token;
 
       dispatch(setCredentials({ user, token }));
-      navigate("/dashboard");
+
+      if (user?.role === "admin") {
+        navigate("/dashboard/admin");
+      } else {
+        navigate("/dashboard");
+      }
     } catch (loginError) {
       setError(loginError.response?.data?.message || "Login failed");
     } finally {

@@ -20,9 +20,9 @@ const DashboardLayout = () => {
   const getNavLinks = () => {
     if (role === "admin") {
       return [
-        { label: "Dashboard", to: "/dashboard" },
+        { label: "Dashboard", to: "/dashboard/admin" },
         { label: "Projects", to: "/dashboard/projects" },
-        { label: "Users", to: "/users" },
+        { label: "Users", to: "/dashboard/users" },
         { label: "Resources", to: "/dashboard/resources" },
         { label: "Workers", to: "/dashboard/workers" },
         { label: "Attendance", to: "/dashboard/attendance" },
