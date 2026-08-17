@@ -35,7 +35,6 @@ const DashboardLayout = () => {
 
     if (role === "project_manager") {
       return [
-        { label: "Dashboard", to: "/dashboard" },
         { label: "Projects", to: "/dashboard/projects" },
         { label: "Resources", to: "/dashboard/resources" },
         { label: "Workers", to: "/dashboard/workers" },
@@ -47,7 +46,17 @@ const DashboardLayout = () => {
       ];
     }
 
-    return [{ label: "Dashboard", to: "/dashboard" }];
+    // site_engineer, contractor, worker, client fall through here
+    return [
+      { label: "Projects", to: "/dashboard/projects" },
+      { label: "Resources", to: "/dashboard/resources" },
+      { label: "Workers", to: "/dashboard/workers" },
+      { label: "Attendance", to: "/dashboard/attendance" },
+      { label: "Inventory", to: "/dashboard/inventory" },
+      { label: "Vendors", to: "/dashboard/vendors" },
+      { label: "Procurement", to: "/dashboard/procurement" },
+      { label: "Reports", to: "/dashboard/reports" },
+    ];
   };
 
   const navLinks = getNavLinks();

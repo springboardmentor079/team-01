@@ -38,7 +38,7 @@ const AppRoutes = () => {
             </ProtectedRoute>
           }
         >
-          <Route index element={<Dashboard />} />
+          <Route index element={<Navigate to="projects" replace />} />
           <Route path="projects" element={<ProjectList />} />
           <Route path="projects/create" element={<ProjectCreate />} />
           <Route path="projects/:id" element={<ProjectDetails />} />
