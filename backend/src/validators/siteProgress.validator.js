@@ -31,11 +31,11 @@ const createSiteProgressValidator = [
     .isBoolean()
     .withMessage("delay.delayed must be a boolean"),
   body("delay.reason")
-    .optional()
+    .optional({ nullable: true })
     .isString()
     .withMessage("delay.reason must be a string"),
   body("delay.revisedDate")
-    .optional()
+    .optional({ nullable: true })
     .isISO8601()
     .withMessage("delay.revisedDate must be a valid ISO8601 date"),
 ];
@@ -64,11 +64,11 @@ const updateSiteProgressValidator = [
     .isBoolean()
     .withMessage("delay.delayed must be a boolean"),
   body("delay.reason")
-    .optional()
+    .optional({ nullable: true })
     .isString()
     .withMessage("delay.reason must be a string"),
   body("delay.revisedDate")
-    .optional()
+    .optional({ nullable: true })
     .isISO8601()
     .withMessage("delay.revisedDate must be a valid ISO8601 date"),
 ];
