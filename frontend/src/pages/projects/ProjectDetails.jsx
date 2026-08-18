@@ -273,7 +273,7 @@ const ProjectDetails = () => {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+            {/* <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
               <h2 className="text-lg font-semibold text-gray-900">
                 Team Members
               </h2>
@@ -299,7 +299,7 @@ const ProjectDetails = () => {
                   </p>
                 )}
               </div>
-            </div>
+            </div> */}
             <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-gray-900">
