@@ -3,10 +3,12 @@ const asyncHandler = require("../utils/asyncHandler");
 const sendResponse = require("../utils/apiResponse");
 
 const createSiteProgress = asyncHandler(async (req, res) => {
-  const report = await SiteProgress.create({
+  const created = await SiteProgress.create({
     ...req.body,
     submittedBy: req.user.id,
   });
+
+  const report = await created.populate("submittedBy", "name");
 
   return sendResponse(
     res,
@@ -16,7 +18,6 @@ const createSiteProgress = asyncHandler(async (req, res) => {
     report,
   );
 });
-
 const getSiteProgressByProject = asyncHandler(async (req, res) => {
   const reports = await SiteProgress.find({ projectId: req.params.projectId })
     .populate("submittedBy", "name email role")
@@ -35,7 +36,7 @@ const updateSiteProgress = asyncHandler(async (req, res) => {
   const report = await SiteProgress.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
-  });
+  }).populate("submittedBy", "name");
 
   if (!report) {
     return sendResponse(res, 404, false, "Site progress report not found");
