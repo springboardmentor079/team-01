@@ -6,19 +6,16 @@ const notificationService = require("../services/notification.service");
 
 const markAttendance = asyncHandler(async (req, res) => {
   try {
-    const record = await Attendance.create(req.body);
+    const created = await Attendance.create(req.body);
+    const record = await created.populate("workerId", "name category");
 
     if (record.status === "absent") {
       const project = await Project.findById(record.projectId);
       if (project?.createdBy) {
-        const populatedRecord = await record.populate(
-          "workerId",
-          "name category",
-        );
         await notificationService.createNotification({
           userId: project.createdBy,
           type: "attendance_flag",
-          message: `${populatedRecord.workerId?.name || "A worker"} was marked absent on ${new Date(record.date).toLocaleDateString()}.`,
+          message: `${record.workerId?.name || "A worker"} was marked absent on ${new Date(record.date).toLocaleDateString()}.`,
           entityType: "Attendance",
           entityId: record._id,
         });
