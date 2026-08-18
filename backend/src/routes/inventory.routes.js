@@ -30,7 +30,7 @@ router.put("/:id", protect, updateInventoryValidator, updateInventory);
 router.delete(
   "/:id",
   protect,
-  allowRoles("Admin"),
+  allowRoles("admin"),
   idParamValidator,
   deleteInventory,
 );
