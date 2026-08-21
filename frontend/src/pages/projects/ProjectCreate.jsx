@@ -247,7 +247,7 @@ const ProjectCreate = () => {
         <div className="flex items-center justify-end gap-3">
           <button
             type="button"
-            onClick={() => navigate("/projects")}
+            onClick={() => navigate("/dashboard/projects")}
             className="rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
           >
             Cancel
