@@ -1,0 +1,37 @@
+const { Router } = require("express");
+const authRoutes = require("./auth.routes");
+const projectRoutes = require("./project.routes");
+const milestoneRoutes = require("./milestone.routes");
+const siteProgressRoutes = require("./siteProgress.routes");
+const resourceRoutes = require("./resource.routes");
+const workerRoutes = require("./worker.routes");
+const attendanceRoutes = require("./attendance.routes");
+const inventoryRoutes = require("./inventory.routes");
+const vendorRoutes = require("./vendor.routes");
+const procurementRoutes = require("./procurement.routes");
+const notificationRoutes = require("./notification.routes");
+const reportRoutes = require("./report.routes");
+const documentRoutes = require("./document.routes");
+const expenseRoutes = require("./expense.routes");
+const dashboardRoutes = require("./dashboard.routes");
+const userRoutes = require("./user.routes");
+const router = Router();
+
+router.use("/auth", authRoutes);
+router.use("/projects", projectRoutes);
+router.use("/milestones", milestoneRoutes);
+router.use("/site-progress", siteProgressRoutes);
+router.use("/resources", resourceRoutes);
+router.use("/workers", workerRoutes);
+router.use("/inventory", inventoryRoutes);
+router.use("/attendance", attendanceRoutes);
+router.use("/vendors", vendorRoutes);
+router.use("/procurement", procurementRoutes);
+router.use("/notifications", notificationRoutes);
+router.use("/reports", reportRoutes);
+router.use("/documents", documentRoutes);
+router.use("/expenses", require("./expense.routes"));
+router.use("/dashboard", require("./dashboard.routes"));
+router.use("/users", require("./user.routes"));
+
+module.exports = router;
