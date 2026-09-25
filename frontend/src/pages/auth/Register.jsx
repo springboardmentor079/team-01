@@ -128,7 +128,6 @@ const Register = () => {
             className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
             required
           >
-            <option value="admin">Administrator</option>
             <option value="project_manager">Project Manager</option>
             <option value="site_engineer">Site Engineer</option>
             <option value="contractor">Contractor</option>
