@@ -55,8 +55,22 @@ const AppRoutes = () => {
           <Route path="procurement" element={<ProcurementDashboard />} />
           <Route path="reports" element={<ReportsPage />} />
           <Route path="pm/:projectId" element={<PMDashboard />} />
-          <Route path="users" element={<UserManagement />} />
-          <Route path="admin" element={<AdminDashboard />} />
+          <Route
+            path="users"
+            element={
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <UserManagement />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="admin"
+            element={
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
         </Route>
 
         <Route path="/" element={<Navigate to="/login" replace />} />
