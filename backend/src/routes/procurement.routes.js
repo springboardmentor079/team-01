@@ -36,7 +36,19 @@ router.patch(
   idParamValidator,
   orderProcurement,
 );
-router.patch("/:id/deliver", protect, deliverValidator, deliverProcurement);
-router.patch("/:id/cancel", protect, cancelValidator, cancelProcurement);
+router.patch(
+  "/:id/deliver",
+  protect,
+  allowRoles("admin", "project_manager"),
+  deliverValidator,
+  deliverProcurement,
+);
+router.patch(
+  "/:id/cancel",
+  protect,
+  allowRoles("admin", "project_manager"),
+  cancelValidator,
+  cancelProcurement,
+);
 
 module.exports = router;
