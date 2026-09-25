@@ -30,8 +30,8 @@ router.use("/procurement", procurementRoutes);
 router.use("/notifications", notificationRoutes);
 router.use("/reports", reportRoutes);
 router.use("/documents", documentRoutes);
-router.use("/expenses", require("./expense.routes"));
-router.use("/dashboard", require("./dashboard.routes"));
-router.use("/users", require("./user.routes"));
+router.use("/expenses", expenseRoutes);
+router.use("/dashboard", dashboardRoutes);
+router.use("/users", userRoutes);
 
 module.exports = router;
